@@ -49,3 +49,6 @@ brand-source/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# QR codes gerados (regenerar com scripts/gerar-qrcodes.mjs)
+qrcodes/
