@@ -1,7 +1,7 @@
 // Endereço absoluto do site — as miniaturas de compartilhamento exigem URL
 // completa. Defina NEXT_PUBLIC_SITE_URL quando houver domínio próprio.
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://palestra-bni.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://bni.elev.ag";
 
 // Declarar openGraph numa página substitui o objeto inteiro do layout, então a
 // imagem precisa ser repetida em cada página — senão o preview sai sem ela.

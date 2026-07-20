@@ -7,8 +7,7 @@ import { fileURLToPath } from "url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-// Trocar quando houver domínio próprio.
-const BASE_PADRAO = "https://palestra-bni.vercel.app";
+const BASE_PADRAO = "https://bni.elev.ag";
 
 const env = Object.fromEntries(
   readFileSync(resolve(root, ".env.local"), "utf8")

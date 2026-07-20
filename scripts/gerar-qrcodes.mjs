@@ -11,10 +11,7 @@ import { fileURLToPath } from "url";
 import QRCode from "qrcode";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const base = (process.argv[2] ?? "https://palestra-bni.vercel.app").replace(
-  /\/+$/,
-  "",
-);
+const base = (process.argv[2] ?? "https://bni.elev.ag").replace(/\/+$/, "");
 
 // Navy da marca em vez de preto puro: contraste praticamente igual, e a leitura
 // não sofre. Correção de erro alta para tolerar impressão e reflexo de mesa.
