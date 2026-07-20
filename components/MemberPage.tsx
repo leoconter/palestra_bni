@@ -14,6 +14,7 @@ export type PageContent = {
   footnote: string;
   reading: string;
   opportunities: Opportunity[];
+  slug: string;
 };
 
 export default function MemberPage({ content }: { content: PageContent }) {
@@ -29,6 +30,7 @@ export default function MemberPage({ content }: { content: PageContent }) {
       <DiagnosticForm
         painTitles={content.opportunities.map((o) => o.title)}
         firstName={content.firstName}
+        memberSlug={content.slug}
       />
       <Footer />
     </main>

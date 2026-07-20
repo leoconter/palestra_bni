@@ -2,45 +2,40 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import {
-  AI_USAGE_DETAIL_TRIGGERS,
-  AI_USAGE_OPTIONS,
-  AUTOMATION_HISTORY_OPTIONS,
-  DIAGNOSIS_PROMISE,
-  FREQUENCY_OPTIONS,
-  OUTCOME_OPTIONS,
-  PAIN_OTHER,
-  TIME_OPTIONS,
-} from "@/lib/constants";
-import ChipGroup from "./ChipGroup";
+import { DIAGNOSIS_PROMISE, PAIN_OTHER } from "@/lib/constants";
+import { emptyAnswers, type DiagnosticAnswers } from "@/lib/types";
+import { useSubmission } from "@/lib/useSubmission";
+import { ContextFields, HowItWorksFields } from "./fields";
 import StepIndicator from "./StepIndicator";
+import SuccessCard from "./SuccessCard";
 
 // Escolher a dor abre uma tela dedicada: a página sai de cena e sobra só o
-// formulário. Sem persistência ainda — o INSERT/UPDATE entra com a API.
+// formulário.
 
 type Props = {
   painTitles: string[];
   firstName: string;
+  memberSlug: string;
 };
 
-export default function DiagnosticForm({ painTitles, firstName }: Props) {
-  const [painChoice, setPainChoice] = useState<string | null>(null);
+export default function DiagnosticForm({
+  painTitles,
+  firstName,
+  memberSlug,
+}: Props) {
+  const [answers, setAnswers] = useState<DiagnosticAnswers>(emptyAnswers);
   const [focused, setFocused] = useState(false);
   const [step, setStep] = useState<2 | 3>(2);
   const [done, setDone] = useState(false);
 
-  const [painDescription, setPainDescription] = useState("");
-  const [frequency, setFrequency] = useState<string | null>(null);
-  const [timePer, setTimePer] = useState<string | null>(null);
-  const [aiUsage, setAiUsage] = useState<string | null>(null);
-  const [aiUsageDetail, setAiUsageDetail] = useState("");
-  const [automationHistory, setAutomationHistory] = useState<string | null>(null);
-  const [outcome, setOutcome] = useState<string | null>(null);
-
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const save = useSubmission(memberSlug);
+
+  const update = (patch: Partial<DiagnosticAnswers>) =>
+    setAnswers((a) => ({ ...a, ...patch }));
 
   const openWith = (pain: string) => {
-    setPainChoice(pain);
+    setAnswers({ ...emptyAnswers, painChoice: pain });
     setStep(2);
     setDone(false);
     setFocused(true);
@@ -76,31 +71,23 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
     );
   };
 
-  const painOptions = [...painTitles, PAIN_OTHER];
+  const finish = (step: 1 | 2 | 3) => {
+    save(step, answers);
+    setDone(true);
+  };
 
-  const successCard = (
-    <div className="step-in rounded-2xl border border-navy-border bg-navy-soft p-8">
-      <span aria-hidden="true" className="block text-5xl leading-none text-yellow">
-        *
-      </span>
-      <h2 className="mt-4 text-2xl font-extrabold leading-tight tracking-tight">
-        Recebido, {firstName}.
-      </h2>
-      <p className="mt-3 max-w-sm text-base leading-relaxed text-offwhite/85">
-        A Elev vai estudar o que você contou. {DIAGNOSIS_PROMISE}
-      </p>
-    </div>
-  );
+  const painOptions = [...painTitles, PAIN_OTHER];
 
   return (
     <>
-      {/* Bloco na página: só a escolha da dor */}
       <section id="diagnostico" className="scroll-mt-6 px-6 py-16">
         <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted">
           Diagnóstico
         </p>
         {done ? (
-          <div className="mt-6">{successCard}</div>
+          <div className="mt-6">
+            <SuccessCard firstName={firstName} />
+          </div>
         ) : (
           <>
             <h2 className="mt-3 max-w-md text-3xl font-extrabold leading-tight tracking-tight">
@@ -134,7 +121,6 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
         )}
       </section>
 
-      {/* Tela dedicada */}
       {focused && (
         <div
           role="dialog"
@@ -179,7 +165,16 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
               className={`safe-bottom px-6 pt-6 ${done ? "flex min-h-full flex-col justify-center" : ""}`}
             >
               {done ? (
-                successCard
+                <>
+                  <SuccessCard firstName={firstName} />
+                  <button
+                    type="button"
+                    onClick={close}
+                    className="mx-auto mt-8 block min-h-11 text-sm text-muted underline underline-offset-4 hover:text-offwhite"
+                  >
+                    Fechar
+                  </button>
+                </>
               ) : (
                 <>
                   <div className="rounded-xl border border-navy-border bg-navy-soft px-4 py-3">
@@ -196,7 +191,7 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
                       </button>
                     </div>
                     <p className="mt-1 text-sm font-semibold leading-snug">
-                      {painChoice}
+                      {answers.painChoice}
                     </p>
                   </div>
 
@@ -205,48 +200,22 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
                       <h2 className="text-2xl font-extrabold leading-tight tracking-tight">
                         Como isso funciona hoje?
                       </h2>
-
-                      <div>
-                        <label
-                          htmlFor="pain-description"
-                          className="text-base font-semibold"
-                        >
-                          Conta com suas palavras como acontece hoje
-                        </label>
-                        <textarea
-                          id="pain-description"
-                          rows={4}
-                          value={painDescription}
-                          onChange={(e) => setPainDescription(e.target.value)}
-                          placeholder="Ex.: o cliente manda os dados no WhatsApp, a secretária copia pra planilha e monta o documento no Word."
-                          className="mt-3 w-full rounded-xl border border-navy-border bg-navy-soft px-4 py-3.5 text-base leading-relaxed placeholder:text-muted/70 focus:border-yellow/60 focus:outline-none"
-                        />
-                      </div>
-
-                      <ChipGroup
-                        label="Com que frequência isso acontece?"
-                        options={FREQUENCY_OPTIONS}
-                        value={frequency}
-                        onChange={(v) => setFrequency(v as string)}
-                      />
-                      <ChipGroup
-                        label="Quanto tempo consome por vez?"
-                        options={TIME_OPTIONS}
-                        value={timePer}
-                        onChange={(v) => setTimePer(v as string)}
-                      />
+                      <HowItWorksFields answers={answers} update={update} />
 
                       <div className="space-y-4 pt-1">
                         <button
                           type="button"
-                          onClick={() => setStep(3)}
+                          onClick={() => {
+                            save(2, answers);
+                            setStep(3);
+                          }}
                           className="w-full rounded-full bg-yellow py-4 font-bold text-navy hover:opacity-90"
                         >
                           Continuar
                         </button>
                         <button
                           type="button"
-                          onClick={() => setDone(true)}
+                          onClick={() => finish(2)}
                           className="mx-auto block min-h-11 text-sm text-muted underline underline-offset-4 hover:text-offwhite"
                         >
                           Enviar só isso por agora
@@ -260,47 +229,13 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
                       <h2 className="text-2xl font-extrabold leading-tight tracking-tight">
                         Só mais um pouco de contexto.
                       </h2>
-                      <div className="space-y-3">
-                        <ChipGroup
-                          label="Sua empresa já usa IA hoje?"
-                          options={AI_USAGE_OPTIONS}
-                          value={aiUsage}
-                          onChange={(v) => setAiUsage(v as string)}
-                        />
-                        {aiUsage && AI_USAGE_DETAIL_TRIGGERS.includes(aiUsage) && (
-                          <div className="step-in">
-                            <label htmlFor="ai-usage-detail" className="sr-only">
-                              Em quê?
-                            </label>
-                            <input
-                              id="ai-usage-detail"
-                              type="text"
-                              value={aiUsageDetail}
-                              onChange={(e) => setAiUsageDetail(e.target.value)}
-                              placeholder="Em quê? (opcional)"
-                              className="w-full rounded-xl border border-navy-border bg-navy-soft px-4 py-3 text-base placeholder:text-muted/70 focus:border-yellow/60 focus:outline-none"
-                            />
-                          </div>
-                        )}
-                      </div>
-                      <ChipGroup
-                        label="Já tentaram automatizar algo antes?"
-                        options={AUTOMATION_HISTORY_OPTIONS}
-                        value={automationHistory}
-                        onChange={(v) => setAutomationHistory(v as string)}
-                      />
-                      <ChipGroup
-                        label="Se a gente resolvesse isso, o que mudaria?"
-                        options={OUTCOME_OPTIONS}
-                        value={outcome}
-                        onChange={(v) => setOutcome(v as string)}
-                      />
+                      <ContextFields answers={answers} update={update} />
 
                       <div className="space-y-4 pt-1">
                         <div>
                           <button
                             type="button"
-                            onClick={() => setDone(true)}
+                            onClick={() => finish(3)}
                             className="w-full rounded-full bg-yellow py-4 font-bold text-navy hover:opacity-90"
                           >
                             Enviar e receber meu diagnóstico
@@ -320,16 +255,6 @@ export default function DiagnosticForm({ painTitles, firstName }: Props) {
                     </div>
                   )}
                 </>
-              )}
-
-              {done && (
-                <button
-                  type="button"
-                  onClick={close}
-                  className="mx-auto mt-8 block min-h-11 text-sm text-muted underline underline-offset-4 hover:text-offwhite"
-                >
-                  Fechar
-                </button>
               )}
             </div>
           </div>

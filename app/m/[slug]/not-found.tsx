@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import SearchBox from "@/components/SearchBox";
 
-// Slug não encontrado: página amigável, nunca um 404 cru.
-// A busca por nome/empresa entra aqui na Fase 4.
+// Slug não encontrado: página amigável com a busca, nunca um 404 cru.
 export default function MemberNotFound() {
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-lg flex-col justify-center px-6 py-10">
+    <main className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-6 pb-12 pt-5">
       <Image
         src="/brand/logo-horizontal-claro.png"
         alt="Elev"
@@ -14,19 +14,30 @@ export default function MemberNotFound() {
         priority
         className="h-7 w-auto"
       />
-      <h1 className="mt-8 text-3xl font-extrabold leading-tight tracking-tight">
-        Esse link não encontrou a sua página.
-      </h1>
-      <p className="mt-4 max-w-sm text-base leading-relaxed text-muted">
-        Pode ter faltado um pedaço do endereço no caminho. Confere o QR code no
-        seu cartão — ou volta pro início que a gente te encontra.
-      </p>
-      <Link
-        href="/"
-        className="mt-8 inline-block w-fit rounded-full bg-yellow px-6 py-3.5 font-bold text-navy transition-opacity hover:opacity-90"
-      >
-        Buscar minha página
-      </Link>
+
+      <div className="mt-16">
+        <h1 className="text-3xl font-extrabold leading-tight tracking-tight">
+          Esse link não encontrou a sua página.
+        </h1>
+        <p className="mt-4 max-w-sm text-base leading-relaxed text-muted">
+          Pode ter faltado um pedaço do endereço no caminho. Busca aqui pelo seu
+          nome ou o da sua empresa que a gente te leva até ela.
+        </p>
+
+        <div className="mt-10">
+          <SearchBox />
+        </div>
+      </div>
+
+      <div className="mt-auto border-t border-navy-border pt-6">
+        <p className="text-sm text-muted">Não é membro?</p>
+        <Link
+          href="/convidado"
+          className="mt-2 inline-flex min-h-11 items-center gap-2 font-semibold text-yellow hover:underline"
+        >
+          Sou convidado <span aria-hidden="true">→</span>
+        </Link>
+      </div>
     </main>
   );
 }

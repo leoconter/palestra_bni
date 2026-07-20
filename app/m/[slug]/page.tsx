@@ -38,6 +38,7 @@ export default async function MemberRoute({ params }: Props) {
         footnote: `Feita pela Elev só para ${member.company_name}. Nada aqui é modelo pronto.`,
         reading: member.reading,
         opportunities: member.opportunities,
+        slug: member.slug,
       }}
     />
   );

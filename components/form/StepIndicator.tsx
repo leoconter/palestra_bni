@@ -1,9 +1,15 @@
-const STEPS = ["A dor", "Como funciona", "Contexto"] as const;
+const DEFAULT_STEPS = ["A dor", "Como funciona", "Contexto"];
 
-export default function StepIndicator({ current }: { current: number }) {
+export default function StepIndicator({
+  current,
+  steps = DEFAULT_STEPS,
+}: {
+  current: number;
+  steps?: string[];
+}) {
   return (
     <ol className="flex items-center gap-2" aria-label={`Passo ${current} de 3`}>
-      {STEPS.map((label, i) => {
+      {steps.map((label, i) => {
         const reached = i + 1 <= current;
         return (
           <li key={label} className="flex flex-1 flex-col gap-1.5">
