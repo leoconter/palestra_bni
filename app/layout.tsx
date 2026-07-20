@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SITE_URL, shareMetadata } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,10 +8,13 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const title = "Elev — 3 tarefas que a IA pode assumir na sua empresa";
+const description =
+  "Página feita pela Elev com 3 oportunidades reais de automação com IA, mapeadas para a sua empresa.";
+
 export const metadata: Metadata = {
-  title: "Elev — 3 tarefas que a IA pode assumir na sua empresa",
-  description:
-    "Página feita pela Elev com 3 oportunidades reais de automação com IA, mapeadas para a sua empresa.",
+  metadataBase: new URL(SITE_URL),
+  ...shareMetadata(title, description, "/"),
 };
 
 export default function RootLayout({

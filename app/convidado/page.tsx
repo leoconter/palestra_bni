@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Footer from "@/components/blocks/Footer";
 import GuestForm from "@/components/form/GuestForm";
+import { shareMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Convidado — diagnóstico da Elev",
-  description:
-    "Conta pra Elev qual tarefa mais consome tempo na sua empresa e receba um diagnóstico de automação com IA em até 48h.",
-};
+const title = "Convidado — diagnóstico da Elev";
+const description =
+  "Conta pra Elev qual tarefa mais consome tempo na sua empresa e receba um diagnóstico de automação com IA em até 48h.";
+
+export const metadata: Metadata = shareMetadata(title, description, "/convidado");
 
 export default function GuestRoute() {
   return (
