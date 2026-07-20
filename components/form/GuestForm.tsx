@@ -12,6 +12,39 @@ import SuccessCard from "./SuccessCard";
 // é o que permite a Elev devolver o diagnóstico depois.
 const STEPS = ["Você", "Como funciona", "Contexto"];
 
+// Número local tem 10 ou 11 dígitos. Acima disso veio com DDI colado junto —
+// e só nesse caso o 55 da frente é código do país. Abaixo, 55 é DDD de Santa
+// Maria, que não pode ser descartado num evento no Rio Grande do Sul.
+function onlyDigits(input: string) {
+  const d = input.replace(/\D/g, "");
+  return (d.length > 11 && d.startsWith("55") ? d.slice(2) : d).slice(0, 11);
+}
+
+// Máscara (xx) xxxxx-xxxx no celular. Com 10 dígitos o número é fixo e o
+// agrupamento correto é (xx) xxxx-xxxx.
+function formatWhatsapp(input: string) {
+  const d = onlyDigits(input);
+  if (d.length <= 2) return d;
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+  if (d.length <= 10) {
+    return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  }
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+
+// Apagar em cima de um separador não muda os dígitos e a máscara reapareceria
+// igual, dando sensação de campo travado. Aqui o backspace remove um dígito.
+function handleWhatsappChange(previous: string, typed: string) {
+  const deleting = typed.length < previous.length;
+  const digits = onlyDigits(typed);
+  if (deleting && formatWhatsapp(digits) === previous) {
+    return formatWhatsapp(digits.slice(0, -1));
+  }
+  return formatWhatsapp(digits);
+}
+
+const WHATSAPP_DIGITS_MIN = 10; // fixo com DDD; celular tem 11
+
 export default function GuestForm() {
   const [answers, setAnswers] = useState<DiagnosticAnswers>(emptyAnswers);
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -34,7 +67,7 @@ export default function GuestForm() {
   const canContinue =
     answers.visitorName.trim().length > 1 &&
     answers.visitorCompany.trim().length > 1 &&
-    answers.visitorWhatsapp.trim().length > 7 &&
+    answers.visitorWhatsapp.replace(/\D/g, "").length >= WHATSAPP_DIGITS_MIN &&
     answers.painChoice.trim().length > 2;
 
   const finish = (reached: 1 | 2 | 3) => {
@@ -99,11 +132,18 @@ export default function GuestForm() {
               <input
                 id="whatsapp"
                 type="tel"
-                inputMode="tel"
+                inputMode="numeric"
                 autoComplete="tel"
                 value={answers.visitorWhatsapp}
-                onChange={(e) => update({ visitorWhatsapp: e.target.value })}
-                placeholder="(51) 9 9999-9999"
+                onChange={(e) =>
+                  update({
+                    visitorWhatsapp: handleWhatsappChange(
+                      answers.visitorWhatsapp,
+                      e.target.value,
+                    ),
+                  })
+                }
+                placeholder="(51) 99999-8888"
                 className={`mt-3 ${inputClass}`}
               />
               <p className="mt-2 text-[13px] text-muted">
