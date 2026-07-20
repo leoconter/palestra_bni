@@ -9,9 +9,6 @@ type Row = {
   company_name: string;
 };
 
-// Páginas de exemplo da fundação — ficam marcadas para não virarem QR code.
-const SAMPLE_SLUGS = ["prisma-arquitetura", "solaris-contabilidade"];
-
 function normalize(value: string) {
   return value
     .normalize("NFD")
@@ -59,42 +56,31 @@ export default function MemberDirectory({ members }: { members: Row[] }) {
       </div>
 
       <ul className="mt-2 divide-y divide-navy-border">
-        {filtered.map((m) => {
-          const isSample = SAMPLE_SLUGS.includes(m.slug);
-          return (
-            <li
-              key={m.id}
-              className="flex items-center gap-3 py-3.5"
-            >
-              <div className="min-w-0 flex-1">
-                <a
-                  href={`/m/${m.slug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-baseline gap-2 font-semibold hover:text-yellow"
-                >
-                  <span className="truncate">{m.company_name}</span>
-                  {isSample && (
-                    <span className="shrink-0 rounded-full border border-navy-border px-2 py-0.5 text-[10px] uppercase tracking-wide text-muted">
-                      exemplo
-                    </span>
-                  )}
-                </a>
-                <p className="text-[13px] leading-snug text-muted">
-                  {m.person_name} · /m/{m.slug}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => copy(m.slug)}
-                className="h-11 shrink-0 rounded-full border border-navy-border px-3.5 text-[13px] text-muted hover:border-yellow/50 hover:text-offwhite"
+        {filtered.map((m) => (
+          <li key={m.id} className="flex items-center gap-3 py-3.5">
+            <div className="min-w-0 flex-1">
+              <a
+                href={`/m/${m.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block truncate font-semibold hover:text-yellow"
               >
-                {copied === m.slug ? "copiado" : "copiar"}
-              </button>
-            </li>
-          );
-        })}
+                {m.company_name}
+              </a>
+              <p className="text-[13px] leading-snug text-muted">
+                {m.person_name} · /m/{m.slug}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => copy(m.slug)}
+              className="h-11 shrink-0 rounded-full border border-navy-border px-3.5 text-[13px] text-muted hover:border-yellow/50 hover:text-offwhite"
+            >
+              {copied === m.slug ? "copiado" : "copiar"}
+            </button>
+          </li>
+        ))}
       </ul>
 
       {filtered.length === 0 && (
