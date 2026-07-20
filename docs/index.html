@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Páginas dos membros | Elev × BNI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#030C31; --soft:#0A1642; --border:#1C2A5E; --yellow:#FFD434; --off:#EFEFEF; --muted:#9AA3C0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--navy); color:var(--off); font-family:Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:720px; margin:0 auto; padding:24px 24px 64px; }
+  .topo { display:flex; align-items:center; justify-content:space-between; }
+  .marca { font-size:18px; font-weight:800; letter-spacing:-.02em; }
+  .marca span { color:var(--yellow); }
+  .tag { font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); }
+  h1 { margin-top:32px; font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1.1; }
+  h1 span { color:var(--yellow); }
+  .sub { margin-top:8px; font-size:14px; line-height:1.6; color:var(--muted); }
+  .campo { width:100%; border:1px solid var(--border); background:var(--soft); color:var(--off);
+           border-radius:12px; padding:12px 16px; font:inherit; font-size:16px; }
+  .campo::placeholder { color:rgba(154,163,192,.7); }
+  .campo:focus { outline:none; border-color:rgba(255,212,52,.6); }
+  .dominio { margin-top:24px; border:1px solid var(--border); background:var(--soft); border-radius:12px; padding:16px; }
+  .dominio label { display:block; font-size:13px; font-weight:600; margin-bottom:8px; }
+  .dominio .ajuda { margin-top:8px; font-size:12px; line-height:1.5; color:var(--muted); }
+  .barra { position:sticky; top:0; z-index:5; background:rgba(3,12,49,.96); backdrop-filter:blur(8px);
+           border-bottom:1px solid var(--border); padding:12px 0 16px; margin-top:24px; }
+  .contagem { margin-top:8px; font-size:13px; color:var(--muted); }
+  ul { list-style:none; }
+  .row { display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .info { min-width:0; flex:1; }
+  .empresa { color:var(--off); font-weight:600; text-decoration:none; display:block; }
+  .empresa:hover { color:var(--yellow); }
+  .pessoa { font-size:13px; line-height:1.4; color:var(--muted); margin-top:2px; }
+  .copiar { flex-shrink:0; min-height:44px; padding:0 14px; border-radius:999px; border:1px solid var(--border);
+            background:none; color:var(--muted); font:inherit; font-size:13px; cursor:pointer; }
+  .copiar:hover { border-color:rgba(255,212,52,.5); color:var(--off); }
+  .vazio { padding:48px 0; text-align:center; font-size:14px; color:var(--muted); }
+  .oculto { display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topo">
+    <span class="marca">ELEV<span>*</span></span>
+    <span class="tag">Uso interno</span>
+  </div>
+
+  <h1>Páginas dos membros<span>*</span></h1>
+  <p class="sub">Uma página por membro. Toque no nome para abrir, ou copie o link para gerar o QR code.</p>
+
+  <div class="dominio">
+    <label for="base">Domínio do site</label>
+    <input class="campo" id="base" type="url" placeholder="https://seusite.com.br" autocomplete="off">
+    <p class="ajuda">Preencha uma vez, depois do deploy. Fica salvo neste navegador e passa a valer para todos os links e cópias.</p>
+  </div>
+
+  <div class="barra">
+    <label class="oculto" for="busca">Buscar</label>
+    <input class="campo" id="busca" type="search" placeholder="Buscar por nome, empresa ou slug" autocomplete="off">
+    <p class="contagem" id="contagem"></p>
+  </div>
+
+  <ul id="lista">
+      <li class="row" data-busca="A3 Arquitetura Engenharia Adriana Silva da Silva a3-arquitetura-engenharia">
+        <div class="info">
+          <a class="empresa" href="/m/a3-arquitetura-engenharia" data-slug="a3-arquitetura-engenharia">A3 Arquitetura Engenharia</a>
+          <p class="pessoa">Adriana Silva da Silva · /m/a3-arquitetura-engenharia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="a3-arquitetura-engenharia">copiar</button>
+      </li>
+      <li class="row" data-busca="Adega Vinas Michele Dutra adega-vinas">
+        <div class="info">
+          <a class="empresa" href="/m/adega-vinas" data-slug="adega-vinas">Adega Vinas</a>
+          <p class="pessoa">Michele Dutra · /m/adega-vinas</p>
+        </div>
+        <button class="copiar" type="button" data-slug="adega-vinas">copiar</button>
+      </li>
+      <li class="row" data-busca="Adriane Besckow Adriane Besckow adriane-besckow">
+        <div class="info">
+          <a class="empresa" href="/m/adriane-besckow" data-slug="adriane-besckow">Adriane Besckow</a>
+          <p class="pessoa">Adriane Besckow · /m/adriane-besckow</p>
+        </div>
+        <button class="copiar" type="button" data-slug="adriane-besckow">copiar</button>
+      </li>
+      <li class="row" data-busca="AJ Corretora Athylla Moraes aj-corretora">
+        <div class="info">
+          <a class="empresa" href="/m/aj-corretora" data-slug="aj-corretora">AJ Corretora</a>
+          <p class="pessoa">Athylla Moraes · /m/aj-corretora</p>
+        </div>
+        <button class="copiar" type="button" data-slug="aj-corretora">copiar</button>
+      </li>
+      <li class="row" data-busca="API Capital Miguel Hugo api-capital">
+        <div class="info">
+          <a class="empresa" href="/m/api-capital" data-slug="api-capital">API Capital</a>
+          <p class="pessoa">Miguel Hugo · /m/api-capital</p>
+        </div>
+        <button class="copiar" type="button" data-slug="api-capital">copiar</button>
+      </li>
+      <li class="row" data-busca="Assemap Daiane Pinós assemap">
+        <div class="info">
+          <a class="empresa" href="/m/assemap" data-slug="assemap">Assemap</a>
+          <p class="pessoa">Daiane Pinós · /m/assemap</p>
+        </div>
+        <button class="copiar" type="button" data-slug="assemap">copiar</button>
+      </li>
+      <li class="row" data-busca="Auris Educação Corporativa Fabiano Natale auris-educacao-corporativa">
+        <div class="info">
+          <a class="empresa" href="/m/auris-educacao-corporativa" data-slug="auris-educacao-corporativa">Auris Educação Corporativa</a>
+          <p class="pessoa">Fabiano Natale · /m/auris-educacao-corporativa</p>
+        </div>
+        <button class="copiar" type="button" data-slug="auris-educacao-corporativa">copiar</button>
+      </li>
+      <li class="row" data-busca="Azevich Boutique Natália Bösing azevich-boutique">
+        <div class="info">
+          <a class="empresa" href="/m/azevich-boutique" data-slug="azevich-boutique">Azevich Boutique</a>
+          <p class="pessoa">Natália Bösing · /m/azevich-boutique</p>
+        </div>
+        <button class="copiar" type="button" data-slug="azevich-boutique">copiar</button>
+      </li>
+      <li class="row" data-busca="Base em Tecnologia Andressa Collin base-em-tecnologia">
+        <div class="info">
+          <a class="empresa" href="/m/base-em-tecnologia" data-slug="base-em-tecnologia">Base em Tecnologia</a>
+          <p class="pessoa">Andressa Collin · /m/base-em-tecnologia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="base-em-tecnologia">copiar</button>
+      </li>
+      <li class="row" data-busca="Baze Corretora Gustavo Sporleder baze-corretora">
+        <div class="info">
+          <a class="empresa" href="/m/baze-corretora" data-slug="baze-corretora">Baze Corretora</a>
+          <p class="pessoa">Gustavo Sporleder · /m/baze-corretora</p>
+        </div>
+        <button class="copiar" type="button" data-slug="baze-corretora">copiar</button>
+      </li>
+      <li class="row" data-busca="Brothers Engenharia Germano Mascarello brothers-engenharia">
+        <div class="info">
+          <a class="empresa" href="/m/brothers-engenharia" data-slug="brothers-engenharia">Brothers Engenharia</a>
+          <p class="pessoa">Germano Mascarello · /m/brothers-engenharia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="brothers-engenharia">copiar</button>
+      </li>
+      <li class="row" data-busca="Bruna Gonçalves Ribeiro Bruna Gonçalves Ribeiro bruna-goncalves-ribeiro">
+        <div class="info">
+          <a class="empresa" href="/m/bruna-goncalves-ribeiro" data-slug="bruna-goncalves-ribeiro">Bruna Gonçalves Ribeiro</a>
+          <p class="pessoa">Bruna Gonçalves Ribeiro · /m/bruna-goncalves-ribeiro</p>
+        </div>
+        <button class="copiar" type="button" data-slug="bruna-goncalves-ribeiro">copiar</button>
+      </li>
+      <li class="row" data-busca="Claudia Garcia Claudia Garcia claudia-garcia">
+        <div class="info">
+          <a class="empresa" href="/m/claudia-garcia" data-slug="claudia-garcia">Claudia Garcia</a>
+          <p class="pessoa">Claudia Garcia · /m/claudia-garcia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="claudia-garcia">copiar</button>
+      </li>
+      <li class="row" data-busca="CRD Consultoria Carla Rodrigues crd-consultoria">
+        <div class="info">
+          <a class="empresa" href="/m/crd-consultoria" data-slug="crd-consultoria">CRD Consultoria</a>
+          <p class="pessoa">Carla Rodrigues · /m/crd-consultoria</p>
+        </div>
+        <button class="copiar" type="button" data-slug="crd-consultoria">copiar</button>
+      </li>
+      <li class="row" data-busca="Cristal Seguros Rafael Souza Costa cristal-seguros">
+        <div class="info">
+          <a class="empresa" href="/m/cristal-seguros" data-slug="cristal-seguros">Cristal Seguros</a>
+          <p class="pessoa">Rafael Souza Costa · /m/cristal-seguros</p>
+        </div>
+        <button class="copiar" type="button" data-slug="cristal-seguros">copiar</button>
+      </li>
+      <li class="row" data-busca="Cristiane Denardi Advocacia Cristiane Denardi cristiane-denardi-advocacia">
+        <div class="info">
+          <a class="empresa" href="/m/cristiane-denardi-advocacia" data-slug="cristiane-denardi-advocacia">Cristiane Denardi Advocacia</a>
+          <p class="pessoa">Cristiane Denardi · /m/cristiane-denardi-advocacia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="cristiane-denardi-advocacia">copiar</button>
+      </li>
+      <li class="row" data-busca="Diego Planejador Diego Maia diego-planejador">
+        <div class="info">
+          <a class="empresa" href="/m/diego-planejador" data-slug="diego-planejador">Diego Planejador</a>
+          <p class="pessoa">Diego Maia · /m/diego-planejador</p>
+        </div>
+        <button class="copiar" type="button" data-slug="diego-planejador">copiar</button>
+      </li>
+      <li class="row" data-busca="Do Prado Embalagens Enio Prado do-prado-embalagens">
+        <div class="info">
+          <a class="empresa" href="/m/do-prado-embalagens" data-slug="do-prado-embalagens">Do Prado Embalagens</a>
+          <p class="pessoa">Enio Prado · /m/do-prado-embalagens</p>
+        </div>
+        <button class="copiar" type="button" data-slug="do-prado-embalagens">copiar</button>
+      </li>
+      <li class="row" data-busca="Fechosul Tiago Benica Morais fechosul">
+        <div class="info">
+          <a class="empresa" href="/m/fechosul" data-slug="fechosul">Fechosul</a>
+          <p class="pessoa">Tiago Benica Morais · /m/fechosul</p>
+        </div>
+        <button class="copiar" type="button" data-slug="fechosul">copiar</button>
+      </li>
+      <li class="row" data-busca="Fleck Sérgio Luiz Fleck fleck">
+        <div class="info">
+          <a class="empresa" href="/m/fleck" data-slug="fleck">Fleck</a>
+          <p class="pessoa">Sérgio Luiz Fleck · /m/fleck</p>
+        </div>
+        <button class="copiar" type="button" data-slug="fleck">copiar</button>
+      </li>
+      <li class="row" data-busca="Funerária São Pedro Glauco Ribas funeraria-sao-pedro">
+        <div class="info">
+          <a class="empresa" href="/m/funeraria-sao-pedro" data-slug="funeraria-sao-pedro">Funerária São Pedro</a>
+          <p class="pessoa">Glauco Ribas · /m/funeraria-sao-pedro</p>
+        </div>
+        <button class="copiar" type="button" data-slug="funeraria-sao-pedro">copiar</button>
+      </li>
+      <li class="row" data-busca="Geovida Nathália Carvalho geovida">
+        <div class="info">
+          <a class="empresa" href="/m/geovida" data-slug="geovida">Geovida</a>
+          <p class="pessoa">Nathália Carvalho · /m/geovida</p>
+        </div>
+        <button class="copiar" type="button" data-slug="geovida">copiar</button>
+      </li>
+      <li class="row" data-busca="Go! English Luciano Santos go-english">
+        <div class="info">
+          <a class="empresa" href="/m/go-english" data-slug="go-english">Go! English</a>
+          <p class="pessoa">Luciano Santos · /m/go-english</p>
+        </div>
+        <button class="copiar" type="button" data-slug="go-english">copiar</button>
+      </li>
+      <li class="row" data-busca="Grupo Axia Gabriel Paczek Souza grupo-axia">
+        <div class="info">
+          <a class="empresa" href="/m/grupo-axia" data-slug="grupo-axia">Grupo Axia</a>
+          <p class="pessoa">Gabriel Paczek Souza · /m/grupo-axia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="grupo-axia">copiar</button>
+      </li>
+      <li class="row" data-busca="GS Cálculos Judiciais Gisele Sarante gs-calculos-judiciais">
+        <div class="info">
+          <a class="empresa" href="/m/gs-calculos-judiciais" data-slug="gs-calculos-judiciais">GS Cálculos Judiciais</a>
+          <p class="pessoa">Gisele Sarante · /m/gs-calculos-judiciais</p>
+        </div>
+        <button class="copiar" type="button" data-slug="gs-calculos-judiciais">copiar</button>
+      </li>
+      <li class="row" data-busca="Haas Nunes e Alguz Jonas Nunes haas-nunes-e-alguz">
+        <div class="info">
+          <a class="empresa" href="/m/haas-nunes-e-alguz" data-slug="haas-nunes-e-alguz">Haas Nunes e Alguz</a>
+          <p class="pessoa">Jonas Nunes · /m/haas-nunes-e-alguz</p>
+        </div>
+        <button class="copiar" type="button" data-slug="haas-nunes-e-alguz">copiar</button>
+      </li>
+      <li class="row" data-busca="Kangen Liliane Vaz kangen">
+        <div class="info">
+          <a class="empresa" href="/m/kangen" data-slug="kangen">Kangen</a>
+          <p class="pessoa">Liliane Vaz · /m/kangen</p>
+        </div>
+        <button class="copiar" type="button" data-slug="kangen">copiar</button>
+      </li>
+      <li class="row" data-busca="Libertas Priscila Swoboda libertas">
+        <div class="info">
+          <a class="empresa" href="/m/libertas" data-slug="libertas">Libertas</a>
+          <p class="pessoa">Priscila Swoboda · /m/libertas</p>
+        </div>
+        <button class="copiar" type="button" data-slug="libertas">copiar</button>
+      </li>
+      <li class="row" data-busca="Maestri Distribuidora Felipe Maestri maestri-distribuidora">
+        <div class="info">
+          <a class="empresa" href="/m/maestri-distribuidora" data-slug="maestri-distribuidora">Maestri Distribuidora</a>
+          <p class="pessoa">Felipe Maestri · /m/maestri-distribuidora</p>
+        </div>
+        <button class="copiar" type="button" data-slug="maestri-distribuidora">copiar</button>
+      </li>
+      <li class="row" data-busca="Maria Brasileira Leandro Serafina maria-brasileira">
+        <div class="info">
+          <a class="empresa" href="/m/maria-brasileira" data-slug="maria-brasileira">Maria Brasileira</a>
+          <p class="pessoa">Leandro Serafina · /m/maria-brasileira</p>
+        </div>
+        <button class="copiar" type="button" data-slug="maria-brasileira">copiar</button>
+      </li>
+      <li class="row" data-busca="Myllamel Aline de Mello myllamel">
+        <div class="info">
+          <a class="empresa" href="/m/myllamel" data-slug="myllamel">Myllamel</a>
+          <p class="pessoa">Aline de Mello · /m/myllamel</p>
+        </div>
+        <button class="copiar" type="button" data-slug="myllamel">copiar</button>
+      </li>
+      <li class="row" data-busca="Oliveria Silva Advogados Roberta Silva oliveria-silva-advogados">
+        <div class="info">
+          <a class="empresa" href="/m/oliveria-silva-advogados" data-slug="oliveria-silva-advogados">Oliveria Silva Advogados</a>
+          <p class="pessoa">Roberta Silva · /m/oliveria-silva-advogados</p>
+        </div>
+        <button class="copiar" type="button" data-slug="oliveria-silva-advogados">copiar</button>
+      </li>
+      <li class="row" data-busca="Orange Tecnologia Antônio Martins orange-tecnologia">
+        <div class="info">
+          <a class="empresa" href="/m/orange-tecnologia" data-slug="orange-tecnologia">Orange Tecnologia</a>
+          <p class="pessoa">Antônio Martins · /m/orange-tecnologia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="orange-tecnologia">copiar</button>
+      </li>
+      <li class="row" data-busca="Origami Arquitetura Cibele Yoshinaga origami-arquitetura">
+        <div class="info">
+          <a class="empresa" href="/m/origami-arquitetura" data-slug="origami-arquitetura">Origami Arquitetura</a>
+          <p class="pessoa">Cibele Yoshinaga · /m/origami-arquitetura</p>
+        </div>
+        <button class="copiar" type="button" data-slug="origami-arquitetura">copiar</button>
+      </li>
+      <li class="row" data-busca="Paola Tortelli Paola Tortelli paola-tortelli">
+        <div class="info">
+          <a class="empresa" href="/m/paola-tortelli" data-slug="paola-tortelli">Paola Tortelli</a>
+          <p class="pessoa">Paola Tortelli · /m/paola-tortelli</p>
+        </div>
+        <button class="copiar" type="button" data-slug="paola-tortelli">copiar</button>
+      </li>
+      <li class="row" data-busca="Plot Digital Euzebio Rodolfo Marcello plot-digital">
+        <div class="info">
+          <a class="empresa" href="/m/plot-digital" data-slug="plot-digital">Plot Digital</a>
+          <p class="pessoa">Euzebio Rodolfo Marcello · /m/plot-digital</p>
+        </div>
+        <button class="copiar" type="button" data-slug="plot-digital">copiar</button>
+      </li>
+      <li class="row" data-busca="Prisma Arquitetura Renata Prado prisma-arquitetura">
+        <div class="info">
+          <a class="empresa" href="/m/prisma-arquitetura" data-slug="prisma-arquitetura">Prisma Arquitetura</a>
+          <p class="pessoa">Renata Prado · /m/prisma-arquitetura</p>
+        </div>
+        <button class="copiar" type="button" data-slug="prisma-arquitetura">copiar</button>
+      </li>
+      <li class="row" data-busca="Razim Locações e Comércio Viviane Zimmer Gay razim-locacoes-e-comercio">
+        <div class="info">
+          <a class="empresa" href="/m/razim-locacoes-e-comercio" data-slug="razim-locacoes-e-comercio">Razim Locações e Comércio</a>
+          <p class="pessoa">Viviane Zimmer Gay · /m/razim-locacoes-e-comercio</p>
+        </div>
+        <button class="copiar" type="button" data-slug="razim-locacoes-e-comercio">copiar</button>
+      </li>
+      <li class="row" data-busca="RC7 Corretora de Seguros Raphaella de M. Cruz rc7-corretora-de-seguros">
+        <div class="info">
+          <a class="empresa" href="/m/rc7-corretora-de-seguros" data-slug="rc7-corretora-de-seguros">RC7 Corretora de Seguros</a>
+          <p class="pessoa">Raphaella de M. Cruz · /m/rc7-corretora-de-seguros</p>
+        </div>
+        <button class="copiar" type="button" data-slug="rc7-corretora-de-seguros">copiar</button>
+      </li>
+      <li class="row" data-busca="Roberta Fortunato Advocacia Roberta Fortunato roberta-fortunato-advocacia">
+        <div class="info">
+          <a class="empresa" href="/m/roberta-fortunato-advocacia" data-slug="roberta-fortunato-advocacia">Roberta Fortunato Advocacia</a>
+          <p class="pessoa">Roberta Fortunato · /m/roberta-fortunato-advocacia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="roberta-fortunato-advocacia">copiar</button>
+      </li>
+      <li class="row" data-busca="Sanger e Podeleski Gizele Sanger sanger-e-podeleski">
+        <div class="info">
+          <a class="empresa" href="/m/sanger-e-podeleski" data-slug="sanger-e-podeleski">Sanger e Podeleski</a>
+          <p class="pessoa">Gizele Sanger · /m/sanger-e-podeleski</p>
+        </div>
+        <button class="copiar" type="button" data-slug="sanger-e-podeleski">copiar</button>
+      </li>
+      <li class="row" data-busca="Seven Life Jenifer Metzen seven-life">
+        <div class="info">
+          <a class="empresa" href="/m/seven-life" data-slug="seven-life">Seven Life</a>
+          <p class="pessoa">Jenifer Metzen · /m/seven-life</p>
+        </div>
+        <button class="copiar" type="button" data-slug="seven-life">copiar</button>
+      </li>
+      <li class="row" data-busca="Simonetto José Francisco de Lima simonetto">
+        <div class="info">
+          <a class="empresa" href="/m/simonetto" data-slug="simonetto">Simonetto</a>
+          <p class="pessoa">José Francisco de Lima · /m/simonetto</p>
+        </div>
+        <button class="copiar" type="button" data-slug="simonetto">copiar</button>
+      </li>
+      <li class="row" data-busca="Sobotyck e Zelcovit Advogados Érick Sobotyk Lemos sobotyck-e-zelcovit-advogados">
+        <div class="info">
+          <a class="empresa" href="/m/sobotyck-e-zelcovit-advogados" data-slug="sobotyck-e-zelcovit-advogados">Sobotyck e Zelcovit Advogados</a>
+          <p class="pessoa">Érick Sobotyk Lemos · /m/sobotyck-e-zelcovit-advogados</p>
+        </div>
+        <button class="copiar" type="button" data-slug="sobotyck-e-zelcovit-advogados">copiar</button>
+      </li>
+      <li class="row" data-busca="Solaris Contabilidade Marcos Vilela solaris-contabilidade">
+        <div class="info">
+          <a class="empresa" href="/m/solaris-contabilidade" data-slug="solaris-contabilidade">Solaris Contabilidade</a>
+          <p class="pessoa">Marcos Vilela · /m/solaris-contabilidade</p>
+        </div>
+        <button class="copiar" type="button" data-slug="solaris-contabilidade">copiar</button>
+      </li>
+      <li class="row" data-busca="Solaro Marketing Digital Vanessa Moraes Nunes solaro-marketing-digital">
+        <div class="info">
+          <a class="empresa" href="/m/solaro-marketing-digital" data-slug="solaro-marketing-digital">Solaro Marketing Digital</a>
+          <p class="pessoa">Vanessa Moraes Nunes · /m/solaro-marketing-digital</p>
+        </div>
+        <button class="copiar" type="button" data-slug="solaro-marketing-digital">copiar</button>
+      </li>
+      <li class="row" data-busca="Start Inc. Katy Dorneles start-inc">
+        <div class="info">
+          <a class="empresa" href="/m/start-inc" data-slug="start-inc">Start Inc.</a>
+          <p class="pessoa">Katy Dorneles · /m/start-inc</p>
+        </div>
+        <button class="copiar" type="button" data-slug="start-inc">copiar</button>
+      </li>
+      <li class="row" data-busca="Suprema Solar Felipe Patrício de Souza suprema-solar">
+        <div class="info">
+          <a class="empresa" href="/m/suprema-solar" data-slug="suprema-solar">Suprema Solar</a>
+          <p class="pessoa">Felipe Patrício de Souza · /m/suprema-solar</p>
+        </div>
+        <button class="copiar" type="button" data-slug="suprema-solar">copiar</button>
+      </li>
+      <li class="row" data-busca="Swift Viagens Pedro Barbieri Pereira swift-viagens">
+        <div class="info">
+          <a class="empresa" href="/m/swift-viagens" data-slug="swift-viagens">Swift Viagens</a>
+          <p class="pessoa">Pedro Barbieri Pereira · /m/swift-viagens</p>
+        </div>
+        <button class="copiar" type="button" data-slug="swift-viagens">copiar</button>
+      </li>
+      <li class="row" data-busca="União Imóveis Camila Mello uniao-imoveis">
+        <div class="info">
+          <a class="empresa" href="/m/uniao-imoveis" data-slug="uniao-imoveis">União Imóveis</a>
+          <p class="pessoa">Camila Mello · /m/uniao-imoveis</p>
+        </div>
+        <button class="copiar" type="button" data-slug="uniao-imoveis">copiar</button>
+      </li>
+      <li class="row" data-busca="Vinicius Moehlecke Vinicius Moehlecke vinicius-moehlecke">
+        <div class="info">
+          <a class="empresa" href="/m/vinicius-moehlecke" data-slug="vinicius-moehlecke">Vinicius Moehlecke</a>
+          <p class="pessoa">Vinicius Moehlecke · /m/vinicius-moehlecke</p>
+        </div>
+        <button class="copiar" type="button" data-slug="vinicius-moehlecke">copiar</button>
+      </li>
+      <li class="row" data-busca="Vitor Celoin Fotografia Vitor Siqueira Ceolin vitor-celoin-fotografia">
+        <div class="info">
+          <a class="empresa" href="/m/vitor-celoin-fotografia" data-slug="vitor-celoin-fotografia">Vitor Celoin Fotografia</a>
+          <p class="pessoa">Vitor Siqueira Ceolin · /m/vitor-celoin-fotografia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="vitor-celoin-fotografia">copiar</button>
+      </li>
+      <li class="row" data-busca="Vitor Kessler Soc. Adv. Vitor Moraes Kessler vitor-kessler-soc-adv">
+        <div class="info">
+          <a class="empresa" href="/m/vitor-kessler-soc-adv" data-slug="vitor-kessler-soc-adv">Vitor Kessler Soc. Adv.</a>
+          <p class="pessoa">Vitor Moraes Kessler · /m/vitor-kessler-soc-adv</p>
+        </div>
+        <button class="copiar" type="button" data-slug="vitor-kessler-soc-adv">copiar</button>
+      </li>
+      <li class="row" data-busca="Vittamia Newton Barros vittamia">
+        <div class="info">
+          <a class="empresa" href="/m/vittamia" data-slug="vittamia">Vittamia</a>
+          <p class="pessoa">Newton Barros · /m/vittamia</p>
+        </div>
+        <button class="copiar" type="button" data-slug="vittamia">copiar</button>
+      </li>
+  </ul>
+  <p class="vazio oculto" id="vazio">Nenhuma página encontrada.</p>
+</div>
+
+<script>
+  var norm = function (v) { return v.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); };
+  var linhas = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var busca = document.getElementById('busca');
+  var contagem = document.getElementById('contagem');
+  var vazio = document.getElementById('vazio');
+  var base = document.getElementById('base');
+
+  function limpaBase(v) { return (v || '').trim().replace(/\/+$/, ''); }
+
+  function aplicaBase() {
+    var b = limpaBase(base.value);
+    localStorage.setItem('elevBase', b);
+    linhas.forEach(function (li) {
+      var a = li.querySelector('.empresa');
+      a.href = (b || '') + '/m/' + a.dataset.slug;
+      a.target = b ? '_blank' : '';
+      a.rel = b ? 'noopener noreferrer' : '';
+    });
+  }
+
+  function filtra() {
+    var q = norm(busca.value.trim());
+    var visiveis = 0;
+    linhas.forEach(function (li) {
+      var mostra = !q || norm(li.dataset.busca).indexOf(q) !== -1;
+      li.classList.toggle('oculto', !mostra);
+      if (mostra) visiveis++;
+    });
+    contagem.textContent = visiveis + (visiveis === 1 ? ' página' : ' páginas') +
+      (q ? ' de ' + linhas.length : '');
+    vazio.classList.toggle('oculto', visiveis > 0);
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.copiar');
+    if (!btn) return;
+    var b = limpaBase(base.value) || window.location.origin;
+    navigator.clipboard.writeText(b + '/m/' + btn.dataset.slug).then(function () {
+      btn.textContent = 'copiado';
+      setTimeout(function () { btn.textContent = 'copiar'; }, 1600);
+    });
+  });
+
+  base.value = localStorage.getItem('elevBase') || '';
+  base.addEventListener('input', aplicaBase);
+  busca.addEventListener('input', filtra);
+  aplicaBase();
+  filtra();
+</script>
+</body>
+</html>
