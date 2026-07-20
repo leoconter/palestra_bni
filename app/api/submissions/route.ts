@@ -2,33 +2,18 @@ import { NextResponse } from "next/server";
 import { supabaseService } from "@/lib/supabase";
 import type { DiagnosticAnswers } from "@/lib/types";
 
-// Grava ao fim da etapa 1 e atualiza nas seguintes. Nunca devolve erro ao
-// visitante: numa reunião, um problema de banco não pode virar tela vermelha
-// na mão de quem acabou de nos dar o contato.
+// O cliente manda sempre o mesmo id ao longo das etapas, então aqui é upsert:
+// a primeira chamada cria a linha e as seguintes enriquecem a mesma.
+//
+// Nunca devolve erro ao visitante: numa reunião, um problema de banco não pode
+// virar tela vermelha na mão de quem acabou de nos dar o contato.
 
 type Payload = {
-  id?: string | null;
+  id: string;
   memberSlug?: string | null;
   step: 1 | 2 | 3;
   answers: DiagnosticAnswers;
 };
-
-function toRow(answers: DiagnosticAnswers, step: number) {
-  return {
-    step_reached: step,
-    pain_choice: answers.painChoice,
-    pain_description: answers.painDescription || null,
-    frequency: answers.frequency,
-    time_per_occurrence: answers.timePer,
-    ai_usage: answers.aiUsage,
-    ai_usage_detail: answers.aiUsageDetail || null,
-    automation_history: answers.automationHistory,
-    expected_outcome: answers.outcome,
-    visitor_name: answers.visitorName || null,
-    visitor_company: answers.visitorCompany || null,
-    visitor_whatsapp: answers.visitorWhatsapp || null,
-  };
-}
 
 export async function POST(request: Request) {
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -38,13 +23,9 @@ export async function POST(request: Request) {
 
   try {
     const { id, memberSlug, step, answers } = (await request.json()) as Payload;
-    const db = supabaseService();
-    const row = toRow(answers, step);
+    if (!id) return NextResponse.json({ stored: false });
 
-    if (id) {
-      await db.from("bni_submissions").update(row).eq("id", id);
-      return NextResponse.json({ id, stored: true });
-    }
+    const db = supabaseService();
 
     let memberId: string | null = null;
     if (memberSlug) {
@@ -56,13 +37,24 @@ export async function POST(request: Request) {
       memberId = data?.id ?? null;
     }
 
-    const { data } = await db
-      .from("bni_submissions")
-      .insert({ ...row, member_id: memberId })
-      .select("id")
-      .single();
+    await db.from("bni_submissions").upsert({
+      id,
+      member_id: memberId,
+      step_reached: step,
+      pain_choice: answers.painChoice,
+      pain_description: answers.painDescription || null,
+      frequency: answers.frequency,
+      time_per_occurrence: answers.timePer,
+      ai_usage: answers.aiUsage,
+      ai_usage_detail: answers.aiUsageDetail || null,
+      automation_history: answers.automationHistory,
+      expected_outcome: answers.outcome,
+      visitor_name: answers.visitorName || null,
+      visitor_company: answers.visitorCompany || null,
+      visitor_whatsapp: answers.visitorWhatsapp || null,
+    });
 
-    return NextResponse.json({ id: data?.id ?? null, stored: true });
+    return NextResponse.json({ id, stored: true });
   } catch (error) {
     console.error("Falha ao gravar submissão:", error);
     return NextResponse.json({ stored: false });
