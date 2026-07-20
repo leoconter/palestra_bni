@@ -7,6 +7,9 @@ import { fileURLToPath } from "url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
+// Trocar quando houver domínio próprio.
+const BASE_PADRAO = "https://palestra-bni.vercel.app";
+
 const env = Object.fromEntries(
   readFileSync(resolve(root, ".env.local"), "utf8")
     .split("\n")
@@ -102,7 +105,7 @@ const html = `<!doctype html>
   <div class="dominio">
     <label for="base">Domínio do site</label>
     <input class="campo" id="base" type="url" placeholder="https://seusite.com.br" autocomplete="off">
-    <p class="ajuda">Preencha uma vez, depois do deploy. Fica salvo neste navegador e passa a valer para todos os links e cópias.</p>
+    <p class="ajuda">Vale para todos os links e para o botão copiar. Fica salvo neste navegador — troque aqui quando houver domínio próprio.</p>
   </div>
 
   <div class="barra">
@@ -161,7 +164,7 @@ ${rows}
     });
   });
 
-  base.value = localStorage.getItem('elevBase') || '';
+  base.value = localStorage.getItem('elevBase') || '${BASE_PADRAO}';
   base.addEventListener('input', aplicaBase);
   busca.addEventListener('input', filtra);
   aplicaBase();
